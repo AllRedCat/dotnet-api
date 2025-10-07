@@ -54,6 +54,10 @@ namespace vl_dotnet_backend.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("double");
 
@@ -78,9 +82,6 @@ namespace vl_dotnet_backend.Migrations
                     b.Property<string>("OperationalSchedule")
                         .IsRequired()
                         .HasColumnType("json");
-
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("PriceHour")
                         .HasColumnType("decimal(65,30)");
@@ -118,17 +119,17 @@ namespace vl_dotnet_backend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("CEP")
+                    b.Property<string>("Cep")
                         .HasMaxLength(9)
                         .HasColumnType("varchar(9)");
-
-                    b.Property<string>("CPF")
-                        .HasMaxLength(14)
-                        .HasColumnType("varchar(14)");
 
                     b.Property<string>("City")
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Cpf")
+                        .HasMaxLength(14)
+                        .HasColumnType("varchar(14)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
@@ -146,6 +147,10 @@ namespace vl_dotnet_backend.Migrations
                     b.Property<string>("Neighborhood")
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Number")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
@@ -169,10 +174,6 @@ namespace vl_dotnet_backend.Migrations
                     b.Property<string>("State")
                         .HasMaxLength(2)
                         .HasColumnType("varchar(2)");
-
-                    b.Property<string>("number")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 

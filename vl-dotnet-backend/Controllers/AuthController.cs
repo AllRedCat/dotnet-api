@@ -24,7 +24,7 @@ public class AuthController(
 {
     private readonly ILogger<AuthController> _logger = logger;
 
-    // Route to register
+
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto registerDto)
     {
@@ -44,7 +44,7 @@ public class AuthController(
             Email = registerDto.Email,
             PasswordHash = passwordHash,
             PasswordSalt = passwordSalt,
-            Role = Users.RoleType.User, // Default role = user
+            Role = RoleType.Client, // Default role = Client
             CreatedAt = DateTime.UtcNow
         };
 

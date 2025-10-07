@@ -1,4 +1,4 @@
-namespace vl_dotnet_backend.DTO;
+namespace vl_dotnet_backend.Models;
 
 public enum RoleType
 {

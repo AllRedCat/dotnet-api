@@ -5,19 +5,13 @@ namespace vl_dotnet_backend.Models;
 
 public class Users
 {
-    public enum RoleType
-    {
-        Admin,
-        Client,
-        User
-    }
-    
+
     public int Id { get; set; }
     
     [MaxLength(255)]
     public string Name { get; set; } = string.Empty;
     [MaxLength(14)]
-    public string? CPF { get; set; }
+    public string? Cpf { get; set; }
     [MaxLength(32)]
     public string? Phone { get; set; }
     public RoleType Role { get; set; }
@@ -27,7 +21,7 @@ public class Users
     [MaxLength(255)]
     public string? Address { get; set; }
     [MaxLength(9)]
-    public string? CEP { get; set; }
+    public string? Cep { get; set; }
     [MaxLength(255)]
     public string? City { get; set; }
     [MaxLength(2)]
@@ -35,7 +29,7 @@ public class Users
     [MaxLength(255)]
     public string? Neighborhood { get; set; }
     [MaxLength(100)]
-    public string? number { get; set; }
+    public string? Number { get; set; }
     
     [MaxLength(255)]
     public string Email { get; set; } = string.Empty;

@@ -11,6 +11,8 @@ public class ParkingLots
 
     [MaxLength(255)]
     public string Name { get; set; } = string.Empty;
+
+    public string Image { get; set; } = string.Empty;
     public int CoveredLots { get; set; }
     public int UncoveredLots { get; set; }
     public decimal PriceHour { get; set; }
@@ -32,7 +34,7 @@ public class ParkingLots
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     
-    public int OwnerId { get; set; }
+    public int UserId { get; set; }
     public Users User { get; set; } = null!;
     
     public DateTime CreatedAt { get; set; } = DateTime.Now;

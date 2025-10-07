@@ -1,3 +1,5 @@
+using vl_dotnet_backend.Models;
+
 namespace vl_dotnet_backend.DTO;
 
 public class UpdateUserDto

@@ -32,6 +32,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Register custom services
 builder.Services.AddScoped<PasswordService>();
+builder.Services.AddScoped<UserServices>();
+builder.Services.AddScoped<ParkingLotServices>();
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
