@@ -11,9 +11,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ParkingLots>()
-            .OwnsMany(p => p.OperationalSchedule, a =>
-            {
-                a.WithOwner();
-            });
+            .Property(p => p.OperationalSchedule)
+            .HasColumnType("json");
     }
 }

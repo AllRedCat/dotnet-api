@@ -1,0 +1,7 @@
+﻿services:
+  vl-dotnet-backend:
+    image: vl-dotnet-backend
+    build:
+      context: .
+      dockerfile: vl-dotnet-backend/Dockerfile
+

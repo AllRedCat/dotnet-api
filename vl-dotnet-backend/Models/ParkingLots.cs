@@ -1,31 +1,41 @@
+
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+
 namespace vl_dotnet_backend.Models;
 
 public class ParkingLots
 {
+    [Key]
     public int Id { get; set; }
 
-    // Parking lot data
-    public string Name { get; set; }
+    [MaxLength(255)]
+    public string Name { get; set; } = string.Empty;
     public int CoveredLots { get; set; }
     public int UncoveredLots { get; set; }
     public decimal PriceHour { get; set; }
-    public OperationalSchedule[] OperationalSchedule { get; set; }
+    public List<OperationalSchedule> OperationalSchedule { get; set; } = new List<OperationalSchedule>();
 
-    // Adress data
-    public string Address { get; set; }
-    public string CEP { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string Neighborhood { get; set; }
-    public string Number { get; set; }
+    [MaxLength(255)]
+    public string Address { get; set; } = string.Empty;
+    [MaxLength(9)]
+    public string CEP { get; set; } = string.Empty;
+    [MaxLength(255)]
+    public string City { get; set; } = string.Empty;
+    [MaxLength(2)]
+    public string State { get; set; } = string.Empty;
+    [MaxLength(255)]
+    public string Neighborhood { get; set; } = string.Empty;
+    [MaxLength(100)]
+    public string Number { get; set; } = string.Empty;
     
     public double Latitude { get; set; }
     public double Longitude { get; set; }
     
-    // Relationships
     public int OwnerId { get; set; }
     public Users User { get; set; } = null!;
     
-    // Created At
     public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? UpdatedAt { get; set; }
+    public DateTime? DeletedAt { get; set; }
 }

@@ -1,12 +1,16 @@
+
+using System.Text;
 using vl_dotnet_backend.Data;
 using Microsoft.EntityFrameworkCore;
 using DotNetEnv;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using vl_dotnet_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers(); // Add support for controllers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,15 +23,41 @@ var database = Environment.GetEnvironmentVariable("DB_NAME");
 var user = Environment.GetEnvironmentVariable("DB_USER");
 var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-// Configure Entity Framework and SQL Server
-// Load the configuration from appsettings.json
-// var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-//     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 var connectionString = $"server={server};port={port};database={database};user={user};password={password}";
 
-// Register the DbContext with the dependency injection container
+// Register the DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+        mySqlOptions => mySqlOptions.UseMicrosoftJson()));
+
+// Register custom services
+builder.Services.AddScoped<PasswordService>();
+
+// Configure JWT Authentication
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+        };
+        
+        // Read token from cookie
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                context.Token = context.Request.Cookies["access_token"];
+                return Task.CompletedTask;
+            }
+        };
+    });
 
 var app = builder.Build();
 
@@ -40,6 +70,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/hello", () => "Hello World!");
+// Add Authentication and Authorization middleware
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers(); // Map controller routes
 
 app.Run();
