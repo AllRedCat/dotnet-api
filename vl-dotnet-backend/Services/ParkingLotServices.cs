@@ -1,6 +1,4 @@
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 using vl_dotnet_backend.Data;
 using vl_dotnet_backend.DTO;
 using vl_dotnet_backend.Models;
@@ -20,6 +18,7 @@ public class ParkingLotServices(AppDbContext context)
             CoveredLots = lot.CoveredLots,
             UncoveredLots = lot.UncoveredLots,
             PriceHour = lot.PriceHour,
+            OperationalSchedules = lot.OperationalSchedule,
             Address = lot.Address,
             Cep = lot.CEP,
             City = lot.City,
@@ -55,6 +54,7 @@ public class ParkingLotServices(AppDbContext context)
             CoveredLots = lot.CoveredLots,
             UncoveredLots = lot.UncoveredLots,
             PriceHour = lot.PriceHour,
+            OperationalSchedules = lot.OperationalSchedule,
             Address = lot.Address,
             Cep = lot.CEP,
             City = lot.City,
@@ -81,7 +81,6 @@ public class ParkingLotServices(AppDbContext context)
         if (await context.ParkingLots.AnyAsync(p => p.Name == dto.Name))
             return false;
 
-        if (userId != null) return false;
         
         var parkingLot = new ParkingLots
         {
@@ -89,7 +88,7 @@ public class ParkingLotServices(AppDbContext context)
             CoveredLots = dto.CoveredLots,
             UncoveredLots = dto.UncoveredLots,
             PriceHour = dto.PriceHour,
-            // OperationalSchedule = dto.OperationalSchedule,
+            OperationalSchedule = dto.OperationalSchedules,
             Address = dto.Address,
             CEP = dto.Cep,
             City = dto.City,
@@ -98,7 +97,7 @@ public class ParkingLotServices(AppDbContext context)
             Number = dto.Number,
             Latitude = dto.Latitude,
             Longitude = dto.Longitude,
-            UserId = int.Parse(userId)
+            UserId = int.Parse(userId!)
         };
         
         context.ParkingLots.Add(parkingLot);

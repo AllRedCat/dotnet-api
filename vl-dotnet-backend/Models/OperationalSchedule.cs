@@ -1,6 +1,6 @@
 namespace vl_dotnet_backend.Models;
 
-public class OperationalSchedule
+public abstract class OperationalSchedule
 {
     public int Day { get; set; }
     public TimeOnly OpenTime { get; set; }

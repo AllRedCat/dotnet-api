@@ -1,6 +1,5 @@
 
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
 
 namespace vl_dotnet_backend.Models;
 
@@ -16,7 +15,7 @@ public class ParkingLots
     public int CoveredLots { get; set; }
     public int UncoveredLots { get; set; }
     public decimal PriceHour { get; set; }
-    public List<OperationalSchedule> OperationalSchedule { get; set; } = new List<OperationalSchedule>();
+    public List<OperationalSchedule>? OperationalSchedule { get; set; } = new List<OperationalSchedule>();
 
     [MaxLength(255)]
     public string Address { get; set; } = string.Empty;
