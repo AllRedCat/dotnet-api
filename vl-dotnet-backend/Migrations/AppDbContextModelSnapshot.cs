@@ -80,7 +80,6 @@ namespace vl_dotnet_backend.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<string>("OperationalSchedule")
-                        .IsRequired()
                         .HasColumnType("json");
 
                     b.Property<decimal>("PriceHour")
@@ -105,6 +104,115 @@ namespace vl_dotnet_backend.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ParkingLots");
+                });
+
+            modelBuilder.Entity("vl_dotnet_backend.Models.PublicParkingLots", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Cep")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("varchar(9)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Latitude")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("Longitude")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("PublicSchedules")
+                        .HasColumnType("json");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("PublicParkingLots");
+                });
+
+            modelBuilder.Entity("vl_dotnet_backend.Models.TransportDepartments", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BankAccount")
+                        .HasColumnType("json");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Cnpj")
+                        .IsRequired()
+                        .HasMaxLength(18)
+                        .HasColumnType("varchar(18)");
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("varchar(32)");
+
+                    b.Property<string>("PixKey")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("varchar(2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransportDepartments");
                 });
 
             modelBuilder.Entity("vl_dotnet_backend.Models.Users", b =>
@@ -189,6 +297,22 @@ namespace vl_dotnet_backend.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("vl_dotnet_backend.Models.PublicParkingLots", b =>
+                {
+                    b.HasOne("vl_dotnet_backend.Models.TransportDepartments", "Department")
+                        .WithMany("PublicParkingLots")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("vl_dotnet_backend.Models.TransportDepartments", b =>
+                {
+                    b.Navigation("PublicParkingLots");
                 });
 
             modelBuilder.Entity("vl_dotnet_backend.Models.Users", b =>

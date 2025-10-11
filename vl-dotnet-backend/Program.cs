@@ -35,6 +35,8 @@ builder.Services.AddScoped<PasswordService>();
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<ParkingLotServices>();
 builder.Services.AddScoped<PublicServices>();
+builder.Services.AddScoped<DepartmentsServices>();
+builder.Services.AddScoped<PublicParkingLotsServices>();
 
 // Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
